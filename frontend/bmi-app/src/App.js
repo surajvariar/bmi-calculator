@@ -6,7 +6,7 @@ import {
   Typography,
   HorizontalSpacer,
   Button,
-  InputField
+  InputField,
 } from '@cred/neopop-web/lib/components';
 import {
   mainColors,
@@ -14,12 +14,46 @@ import {
   getButtonConfig,
 } from '@cred/neopop-web/lib/primitives';
 import styled from 'styled-components';
+import React from 'react';
+import GenderRadio from './genderRadio';
 
 const ContentWrapper = styled.div`
     padding: 20px;
 `;
 
-function App() {
+
+class BMI extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      height: '',
+      weight: '',
+    }
+    this.updateHeight = this.updateHeight.bind(this);
+    this.updateWeight = this.updateWeight.bind(this);
+  }
+  updateHeight(height) {
+    console.log("Height ", height);
+    this.setState({
+      height: height
+    });
+  }
+
+  updateWeight(weight) {
+    console.log("Weight ", weight);
+    this.setState({
+      weight: weight
+    });
+  }
+  render() {
+    return (
+      <App onUpdateHeight={this.updateHeight} onUpdateWeight={this.updateWeight} />
+    )
+  }
+}
+
+function App(props) {
+  
   return (
     <div className="centered" style={{
       paddingTop: '100px',
@@ -46,19 +80,16 @@ function App() {
             <HorizontalSpacer n={4} />
             <div style={{ maxWidth: '100%' }}>
               <InputField
-                autoFocus
                 colorConfig={{
                   labelColor: "#0d0d0d",
                   textColor: "#000000",
                 }}
                 colorMode="light"
-                id="text_field"
+                id="height"
                 inputMode="text"
-                label="Height"
+                label="Height (in cm)"
                 maxLength={30}
-                onBlur={function noRefCheck() { }}
-                onChange={function noRefCheck() { }}
-                onFocus={function noRefCheck() { }}
+                onChange={(e) => { props.onUpdateWeight(e.target.value) }}
                 placeholder="Enter your height"
                 type="text"
               />
@@ -66,23 +97,42 @@ function App() {
             <HorizontalSpacer n={2} />
             <div style={{ maxWidth: '100%' }}>
               <InputField
-                autoFocus
                 colorConfig={{
                   labelColor: "#0d0d0d",
                   textColor: "#000000",
                 }}
                 colorMode="light"
-                id="text_field"
+                id="weight"
                 inputMode="text"
-                label="Weight"
+                label="Weight (in Kg)"
                 maxLength={30}
-                onBlur={function noRefCheck() { }}
-                onChange={function noRefCheck() { }}
-                onFocus={function noRefCheck() { }}
+                onChange={(e) => { props.onUpdateHeight(e.target.value) }}
                 placeholder="Enter your weight"
                 type="text"
               />
             </div>
+            <HorizontalSpacer n={2} />
+            <div style={{ maxWidth: '100%' }}>
+              <InputField
+                colorConfig={{
+                  labelColor: "#0d0d0d",
+                  textColor: "#000000",
+                }}
+                colorMode="light"
+                id="age"
+                inputMode="text"
+                label="Age"
+                maxLength={30}
+                onChange={() => { }}
+                placeholder="Enter your age"
+                type="text"
+              />
+            </div>
+            <HorizontalSpacer n={4} />
+            <div style={{maxWidth:'40%'}}>
+            <GenderRadio />
+            </div>
+            
             <HorizontalSpacer n={4} />
             <Button {...getButtonConfig('blp50p1')} fullWidth={true}>
               Calculate
@@ -94,4 +144,4 @@ function App() {
   );
 }
 
-export default App;
+export default BMI;
