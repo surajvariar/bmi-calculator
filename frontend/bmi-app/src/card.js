@@ -79,7 +79,7 @@ class Card extends React.Component {
                             variant="primary"
                             fullWidth={true}
                             onClick={() => {
-                                this.props.onCalculateBMI()
+                                this.props.onCalculateBMI();
                             }}
                             colorMode="dark"
                             kind="elevated"

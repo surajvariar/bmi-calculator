@@ -1,7 +1,34 @@
-import { Row } from '@cred/neopop-web/lib/components';
+import { Row, ToastContainer, showToast } from '@cred/neopop-web/lib/components';
 import React from 'react';
 import Card from './card';
 import $ from 'jquery'
+
+function displayToast(status, msg, backgroundColor) {
+    console.log("Function called")
+    if (status === 200) {
+        showToast(msg, {
+            type: 'success', dismissOnClick: true, colorConfig: {
+                background: backgroundColor,
+                color: 'black'
+            },
+            textStyle: {
+                heading: {
+                    fontType: "caps",
+                    fontWeight: '600',
+                    fontSize: '40'
+                }
+            }
+        });
+    }
+    else if (status === 400) {
+        showToast(msg, {
+            type: 'error', dismissOnClick: true
+        });
+    }
+    else{
+        showToast(msg,{type:'warning' ,dismissOnClick:true});
+    }
+}
 
 class BMI extends React.Component {
     constructor(props) {
@@ -19,6 +46,7 @@ class BMI extends React.Component {
         this.updateGender = this.updateGender.bind(this);
         this.handleCalculateBMI = this.handleCalculateBMI.bind(this);
     }
+
     updateHeight(height) {
         height = Number(height);
         this.setState({
@@ -48,11 +76,6 @@ class BMI extends React.Component {
     }
 
     handleCalculateBMI() {
-        console.log("Inside BMI");
-        console.log("Height ", this.state.height);
-        console.log("Weight ", this.state.weight);
-        console.log("Age ", this.state.age);
-        console.log("Gender ", this.state.gender);
         let settings = {
             "url": "http://localhost:8080/bmi",
             "method": "POST",
@@ -64,24 +87,52 @@ class BMI extends React.Component {
                 "weight": this.state.weight,
                 "height": this.state.height,
                 "age": this.state.age,
-                "sex": this.state.gender
+                "gender": this.state.gender
             }),
         };
 
-        $.ajax(settings).done(function (data,textstatus,xhr) {
-            console.log(data);
-            console.log(textstatus);
-            console.log(xhr.status)
+        $.ajax(settings).done(function (data, _textstatus, xhr) {
+            let backgroundColor;
+            switch (data.condition) {
+                case "Under Fat":
+                    backgroundColor = "#3398FF"
+                    break;
+                case "Healthy":
+                    backgroundColor = "#33FF57"
+                    break;
+                case "OverWeight":
+                    backgroundColor = "#DBFF33"
+                    break;
+                case "Obese":
+                    backgroundColor = "#FF5733"
+
+                    break;
+                default:
+                    break;
+            }
+
+            displayToast(xhr.status, data.condition, backgroundColor);
+        }).fail(function (xhr,) {
+            displayToast(xhr.status, xhr.responseText);
         });
     }
+
+
 
     render() {
         return (
             <div style={{
                 paddingTop: '100px'
             }}>
+                <ToastContainer />
                 <Row className="v-center">
-                    <Card onUpdateHeight={this.updateHeight} onUpdateWeight={this.updateWeight} onUpdateAge={this.updateAge} onUpdateGender={this.updateGender} onCalculateBMI={this.handleCalculateBMI} />
+                    <Card
+                        onUpdateHeight={this.updateHeight}
+                        onUpdateWeight={this.updateWeight}
+                        onUpdateAge={this.updateAge}
+                        onUpdateGender={this.updateGender}
+                        onCalculateBMI={this.handleCalculateBMI}
+                        buttonState={this.state.buttonState} />
                 </Row>
             </div>
         )
