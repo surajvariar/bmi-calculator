@@ -2,13 +2,11 @@ import React, { useState } from 'react';
 import { Row,Radio, VerticalSpacer } from '@cred/neopop-web/lib/components';
 import { colorGuide } from '@cred/neopop-web/lib/primitives';
 
-const GenderRadio = () => {
+function GenderRadio(props){
     const [selectedVal, setSelectedVal] = useState('');
-    const handleChange = (e) => {
-        console.log(e.target.value);
-        setSelectedVal(e.target.value);
-    };
-
+    const setVal=(value)=>{
+        setSelectedVal(value);
+    }
     return (
         <>
         <Row>
@@ -19,7 +17,7 @@ const GenderRadio = () => {
                 label="Male"
                 isChecked={selectedVal === 'male'}
                 colorConfig={colorGuide.darkComponents.radio}
-                onChange={handleChange}
+                onChange={(e)=>{props.onUpdate(e.target.value); setVal(e.target.value);}}
             />
             <VerticalSpacer n={7} />
             <Radio
@@ -29,7 +27,7 @@ const GenderRadio = () => {
                 label="Female"
                 isChecked={selectedVal === 'female'}
                 colorConfig={colorGuide.darkComponents.radio}
-                onChange={handleChange}
+                onChange={(e)=>{props.onUpdate(e.target.value); setVal(e.target.value);}}
             />
         </Row>
             
