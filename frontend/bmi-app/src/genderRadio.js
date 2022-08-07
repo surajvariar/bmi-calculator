@@ -17,7 +17,7 @@ function GenderRadio(props){
                 label="Male"
                 isChecked={selectedVal === 'male'}
                 colorConfig={colorGuide.darkComponents.radio}
-                onChange={(e)=>{props.onUpdate(e.target.value); setVal(e.target.value);}}
+                onChange={(e)=>{props.onUpdate(e.target.value); setVal(e.target.value); props.checkIsValid(e.target.value)}}
             />
             <VerticalSpacer n={7} />
             <Radio
@@ -27,7 +27,7 @@ function GenderRadio(props){
                 label="Female"
                 isChecked={selectedVal === 'female'}
                 colorConfig={colorGuide.darkComponents.radio}
-                onChange={(e)=>{props.onUpdate(e.target.value); setVal(e.target.value);}}
+                onChange={(e)=>{props.onUpdate(e.target.value); setVal(e.target.value); props.checkIsValid(e.target.value)}}
             />
         </Row>
             
