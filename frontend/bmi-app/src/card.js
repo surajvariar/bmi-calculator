@@ -36,7 +36,7 @@ class Card extends React.Component {
         this.checkWieghtIsValid = this.checkWieghtIsValid.bind(this);
         this.checkGendertIsValid = this.checkGendertIsValid.bind(this);
         this.checkAgetIsValid = this.checkAgetIsValid.bind(this);
-        this.checkButtonState=this.checkButtonState.bind(this);
+        this.checkButtonState = this.checkButtonState.bind(this);
     }
 
     checkHeightIsValid(height) {
@@ -44,82 +44,102 @@ class Card extends React.Component {
             console.log("Inside if of check height state")
             this.setState({
                 heightNotValid: false
-            })
+            },
+                () => {
+                    this.checkButtonState();
+                })
         }
         else {
             this.setState({
                 heightNotValid: true
-            })
+            },
+                () => {
+                    this.checkButtonState();
+                })
         }
-        this.checkButtonState();
+
     }
 
     checkWieghtIsValid(weight) {
         if (weight > 0) {
-            console.log("Inside if of check weight state")
             this.setState({
                 weightNotValid: false
-            })
+            },
+                () => {
+                    this.checkButtonState();
+                })
         }
         else {
             this.setState({
                 weightNotValid: true
-            })
+            },
+                () => {
+                    this.checkButtonState();
+                })
         }
-        this.checkButtonState();
+
     }
 
     checkAgetIsValid(age) {
         if (age !== 0 && age >= 20) {
-            console.log("Inside if of check age state")
             this.setState({
                 ageNotValid: false
-            })
+            },
+                () => {
+                    this.checkButtonState();
+                })
         }
         else {
             this.setState({
                 ageNotValid: true
-            })
+            },
+                () => {
+                    this.checkButtonState();
+                })
         }
-        this.checkButtonState();
+
     }
 
     checkGendertIsValid(gender) {
         console.log(gender)
         if (gender !== '') {
-            console.log("Inside if of check gender state")
             this.setState({
-                genderNotValid: false
-            })
+                genderNotValid: false,
+
+            },
+                () => {
+                    this.checkButtonState();
+                }
+            )
         }
         else {
             this.setState({
                 genderNotValid: true
-            })
+            },
+                () => {
+                    this.checkButtonState();
+                })
         }
-        this.checkButtonState();
+
     }
 
     checkButtonState() {
-        console.log("calling button state")
-        if(!this.state.heightNotValid && !this.state.weightNotValid && !this.state.ageNotValid && !this.state.genderNotValid){
-            console.log("Inside if of check button state")
+        if (!this.state.heightNotValid && !this.state.weightNotValid && !this.state.ageNotValid && !this.state.genderNotValid) {
             this.setState({
-                buttonDisabled:false
+                buttonDisabled: false
             })
         }
-        else{
+        else {
             this.setState({
-                buttonDisabled:true
+                buttonDisabled: true
             })
         }
     }
 
 
-
-
-
     render() {
+
+
         return (
             <ElevatedCard
                 backgroundColor="#327ba8"
@@ -179,9 +199,9 @@ class Card extends React.Component {
 
                         <HorizontalSpacer n={4} />
                         <div style={{ maxWidth: '50%' }}>
-                            <GenderRadio 
-                            onUpdate={this.props.onUpdateGender} 
-                            checkIsValid={this.checkGendertIsValid}
+                            <GenderRadio
+                                onUpdate={this.props.onUpdateGender}
+                                checkIsValid={this.checkGendertIsValid}
                             />
                         </div>
 
