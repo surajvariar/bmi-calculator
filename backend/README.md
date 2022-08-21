@@ -7,6 +7,6 @@
 ## Steps to run docker 
 Backend can be run on docker by following the below steps
 ``` sh
-docker build -t <user_name>/bmi-backend
+docker build -t <user_name>/bmi-backend .
 docker run -d -p 8080:8080 <user_name>/bmi-backend
 ```
