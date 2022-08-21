@@ -25,8 +25,8 @@ function displayToast(status, msg, backgroundColor) {
             type: 'error', dismissOnClick: true
         });
     }
-    else{
-        showToast(msg,{type:'warning' ,dismissOnClick:true});
+    else {
+        showToast(msg, { type: 'warning', dismissOnClick: true });
     }
 }
 
@@ -69,6 +69,7 @@ class BMI extends React.Component {
         })
     }
 
+
     updateGender(gender) {
         this.setState({
             gender: gender === "male" ? 'm' : 'f'
@@ -110,7 +111,6 @@ class BMI extends React.Component {
                 default:
                     break;
             }
-
             displayToast(xhr.status, data.condition, backgroundColor);
         }).fail(function (xhr,) {
             displayToast(xhr.status, xhr.responseText);
@@ -132,7 +132,7 @@ class BMI extends React.Component {
                         onUpdateAge={this.updateAge}
                         onUpdateGender={this.updateGender}
                         onCalculateBMI={this.handleCalculateBMI}
-                        buttonState={this.state.buttonState} />
+                        />
                 </Row>
             </div>
         )
