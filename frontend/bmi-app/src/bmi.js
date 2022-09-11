@@ -4,7 +4,6 @@ import Card from './card';
 import $ from 'jquery'
 
 function displayToast(status, msg, backgroundColor) {
-    console.log("Function called")
     if (status === 200) {
         showToast(msg, {
             type: 'success', dismissOnClick: true, colorConfig: {
